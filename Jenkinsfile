@@ -11,7 +11,7 @@ pipeline {
         stage("npm install") {
             steps{
                 nodejs(nodeJSInstallationName: 'node18') {
-                    npm install
+                    sh 'meong'
                 }
             }
         }
