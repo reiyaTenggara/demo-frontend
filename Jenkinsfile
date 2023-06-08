@@ -11,11 +11,11 @@ pipeline {
     }
 
     stages {
-
         stage("npm install") {
             nodejs('node18'){
                 npm install
-        }
+            }
 
+        }
     }
 }
