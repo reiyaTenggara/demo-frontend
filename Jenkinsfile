@@ -5,16 +5,18 @@ pipeline {
       nodejs 'node18'
     }
 
-    environment {
-        AUTHOR = "Reiya Tenggara"
-        USERNAME = "reiya24"
+    options {
+        disableConcurrentBuilds()
+        timeout(time: 40, unit: 'MINUTES')
     }
 
     stages {
-        stage("npm install") {
+        stage("npm npman") {
             steps {
                 sh 'npm install'
+                sh 'npm run build'
             }
+
         }
 
     }
