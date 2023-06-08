@@ -8,10 +8,9 @@ pipeline {
 
     stages {
 
-        stage("environment") {
+        stage("npm install") {
             steps{
-                echo("autor = ${AUTHOR}")
-                echo("username = ${USERNAME}")
+                sh 'npm install'
             }
         }
 
