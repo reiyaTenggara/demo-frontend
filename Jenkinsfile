@@ -19,5 +19,12 @@ pipeline {
 
         }
 
+        stage("bucket") {
+            steps {
+                s3CopyArtifact buildSelector: lastSuccessful(), excludeFilter: '', filter: './dist', flatten: false, optional: false, projectName: '', target: ''
+            }
+
+        }
+
     }
 }
