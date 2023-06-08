@@ -13,9 +13,7 @@ pipeline {
     stages {
         stage("npm install") {
             steps {
-                nodejs('node18'){
-                   npm install
-               }
+                sh 'npm install'
             }
         }
 
