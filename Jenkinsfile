@@ -10,7 +10,9 @@ pipeline {
 
         stage("npm install") {
             steps{
-                sh 'npm install'
+                nodejs(nodeJSInstallationName: 'node18') {
+                    sh 'npm install'
+                }
             }
         }
 
