@@ -12,10 +12,12 @@ pipeline {
 
     stages {
         stage("npm install") {
-            nodejs('node18'){
-                npm install
+            steps {
+                nodejs('node18'){
+                   npm install
+               }
             }
-
         }
+
     }
 }
