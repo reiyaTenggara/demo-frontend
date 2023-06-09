@@ -1,6 +1,6 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="fasd"/>
+  <HelloWorld msg="hallo meong"/>
 </template>
 
 <script>
