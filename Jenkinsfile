@@ -35,6 +35,7 @@ pipeline {
 
     }
 
+    post {
         aborted {
             slackSend(message: "build digagalkan secara manual : ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
         }
