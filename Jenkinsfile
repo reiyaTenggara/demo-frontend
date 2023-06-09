@@ -14,7 +14,7 @@ pipeline {
         stage('Send notification to Slack') {
             steps {
                 slackSend message: """
-                Starting CI/CD on Repo/Branch: ${env.JOB_NAME}
+                Starting CI/CD on job: ${env.JOB_NAME}
                 Build Number: ${env.BUILD_NUMBER}
                 <${env.BUILD_URL}console|View Output> || <${env.JOB_URL}|View Job> || <${env.JOB_DISPLAY_URL}/${env.BRANCH_NAME}| Open Blue Ocean>
                 """
@@ -61,13 +61,13 @@ pipeline {
 
     post {
         aborted {
-            slackSend(color: "warning", message: "Build manually aborted: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+            slackSend(color: "warning", message: "Build manually aborted:")
         }
         failure {
-            slackSend(color: "danger", message: "Build failed: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+            slackSend(color: "danger", message: "Build failed:")
         }
         success {
-            slackSend(color: "good", message: "Build succeeded: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+            slackSend(color: "good", message: "Build succeeded:")
         }
     }
 }
