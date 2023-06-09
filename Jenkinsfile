@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Send notification to Slack') {
             steps {
-                slackSend(message: "Starting CI/CD on Repo/Branch: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, link: (<${env.BUILD_URL}|Open>)")
+                slackSend(message: "Starting CI/CD on Repo: ${env.JOB_BASE_NAME}, Branch ${env.BRANCH_NAME}, Build Number: ${env.BUILD_NUMBER}, link: (<${env.BUILD_URL}|Open>)")
             }
         }
 
