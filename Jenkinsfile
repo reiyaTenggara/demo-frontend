@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-      nodejs 'node18'
+        nodejs 'node18'
     }
 
     options {
@@ -11,42 +11,59 @@ pipeline {
     }
 
     stages {
-
-        stage('kirim notifikasi ke slack') {
+        stage('Send notification to Slack') {
             steps {
-                slackSend(message: "memulai CI/CD pada Branch : ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER} link: (<${env.BUILD_URL}|Open>)")
-
+                slackSend(message: "Starting CI/CD on Branch: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, link: (<${env.BUILD_URL}|Open>)")
             }
         }
 
-        stage("npm install & build") {
+        stage('npm install & build') {
             steps {
                 sh 'npm install'
                 sh 'npm run build'
             }
-
         }
 
-        stage("kirim folder dist ke S3 bucket") {
+        stage('Upload dist folder to S3 bucket') {
             steps {
-s3Upload consoleLogLevel: 'WARNING', dontSetBuildResultOnFailure: true, dontWaitForConcurrentBuildCompletion: false, entries: [[bucket: 'demo-frontend123', excludedFile: '', flatten: false, gzipFiles: false, keepForever: false, managedArtifacts: false, noUploadOnFailure: true, selectedRegion: 'ap-southeast-1', showDirectlyInBrowser: false, sourceFile: 'dist/**', storageClass: 'STANDARD', uploadFromSlave: false, useServerSideEncryption: false]], pluginFailureResultConstraint: 'FAILURE', profileName: 'demo-frontend123', userMetadata: []
+                s3Upload (
+                    consoleLogLevel: 'WARNING',
+                    dontSetBuildResultOnFailure: true,
+                    dontWaitForConcurrentBuildCompletion: false,
+                    entries: [
+                        [
+                            bucket: 'demo-frontend123',
+                            excludedFile: '',
+                            flatten: false,
+                            gzipFiles: false,
+                            keepForever: false,
+                            managedArtifacts: false,
+                            noUploadOnFailure: true,
+                            selectedRegion: 'ap-southeast-1',
+                            showDirectlyInBrowser: false,
+                            sourceFile: 'dist/**',
+                            storageClass: 'STANDARD',
+                            uploadFromSlave: false,
+                            useServerSideEncryption: false
+                        ]
+                    ],
+                    pluginFailureResultConstraint: 'FAILURE',
+                    profileName: 'demo-frontend123',
+                    userMetadata: []
+                )
             }
-
         }
-
     }
 
     post {
         aborted {
-            slackSend(message: "build digagalkan secara manual : ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+            slackSend(message: "Build manually aborted: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
         }
         failure {
-            slackSend(message: "build failed : ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+            slackSend(message: "Build failed: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
         }
-
         success {
-            slackSend(message: "build success : ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+            slackSend(message: "Build succeeded: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
         }
-
     }
 }
