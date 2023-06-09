@@ -14,6 +14,7 @@ pipeline {
         stage('Send notification to Slack') {
             steps {
                 slackSend(message: "Starting CI/CD on Repo/Branch: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, link: (<${env.BUILD_URL.replace('job', 'blue/organizations/jenkins')}/detail/${env.JOB_NAME}/${env.BUILD_NUMBER}/|Open>)")
+            }
         }
 
         stage('npm install & build') {
