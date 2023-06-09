@@ -18,6 +18,7 @@ pipeline {
                     Branch ${env.BRANCH_NAME}
                     Build Number: ${env.BUILD_NUMBER}
                     link: (<${env.BUILD_URL}|Open>)")
+                """)
             }
         }
 
