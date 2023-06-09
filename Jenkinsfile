@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Send notification to Slack') {
             steps {
-                slackSend message: """
+                slackSend message: """\
                 Starting CI/CD on job: ${env.JOB_NAME}
                 Build Number: ${env.BUILD_NUMBER}
                 <${env.BUILD_URL}console|View Output> || <${env.JOB_URL}|View Job> || <${env.JOB_DISPLAY_URL}/${env.BRANCH_NAME}| Open Blue Ocean>
