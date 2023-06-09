@@ -61,13 +61,13 @@ pipeline {
 
     post {
         aborted {
-            slackSend(color: "warning", message: "Build manually aborted:")
+            slackSend(color: "warning", message: "PIPELINE DIBATALKAN SECARA MANUAL")
         }
         failure {
-            slackSend(color: "danger", message: "Build failed:")
+            slackSend(color: "danger", message: "BUILD FAILED, PLEASE CHECK OUTPUT")
         }
         success {
-            slackSend(color: "good", message: "Build succeeded:")
+            slackSend(color: "good", message: "BUILD SUCCEEDED")
         }
     }
 }
