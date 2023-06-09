@@ -44,7 +44,6 @@ pipeline {
                     uploadFromSlave: false,
                     useServerSideEncryption: false
                 )
-
             }
 
         }
