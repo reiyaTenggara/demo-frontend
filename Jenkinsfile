@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Send notification to Slack') {
             steps {
-                slackSend(message: "Starting CI/CD on Branch: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, link: (<${env.BUILD_URL}|Open>)")
+                slackSend(message: "Starting CI/CD on Repo/Branch: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, link: (<${env.BUILD_URL}|Open>)")
             }
         }
 
@@ -57,13 +57,13 @@ pipeline {
 
     post {
         aborted {
-            slackSend(message: "Build manually aborted: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+            slackSend(color: "warning", message: "Build manually aborted: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
         }
         failure {
-            slackSend(message: "Build failed: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+            slackSend(color: "red", message: "Build failed: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
         }
         success {
-            slackSend(message: "Build succeeded: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+            slackSend(color: "good", message: "Build succeeded: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
         }
     }
 }
