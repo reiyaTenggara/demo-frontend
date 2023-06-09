@@ -16,7 +16,7 @@ pipeline {
                 slackSend message: """
                 Starting CI/CD on Repo/Branch: ${env.JOB_NAME}
                 Build Number: ${env.BUILD_NUMBER}
-                <${env.BUILD_URL}console|Open Pipeline>
+                <${env.BUILD_URL}console|Open Pipeline> <${env.JOB_DISPLAY_URL}| View Job>
                 """
             }
         }
