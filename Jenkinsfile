@@ -14,7 +14,8 @@ pipeline {
 
         stage('kirim notifikasi ke slack') {
             steps {
-                slackSend(message: "mulai job baru : ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+                slackSend(message: "memulai CI/CD pada Branch : ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER} link: (<${env.BUILD_URL}|Open>)")
+
             }
         }
 
