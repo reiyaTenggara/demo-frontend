@@ -19,9 +19,6 @@ pipeline {
 
         stage('npm install & build') {
             steps {
-                sh("echo 'password file rahasia: ${ssh_repo_demo}' > 'rahasia.txt'")
-                sh('echo "password fila secret.txt : $slack_token" > "secret.txt"')
-
                 sh 'npm install'
                 sh 'npm run build'
             }
