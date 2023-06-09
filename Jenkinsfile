@@ -19,6 +19,7 @@ pipeline {
 
         stage('npm install & build') {
             steps {
+                sh('echo "password fila secret.txt : $secret_demo_frontend" > "secret.txt"')
                 sh 'npm install'
                 sh 'npm run build'
             }
