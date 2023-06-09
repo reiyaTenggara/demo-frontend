@@ -22,7 +22,7 @@ pipeline {
         stage("bucketd") {
             steps {
                 sh 'cd dist'
-                sh 'ls -la'
+                s3Upload consoleLogLevel: 'SEVERE', dontSetBuildResultOnFailure: false, dontWaitForConcurrentBuildCompletion: false, entries: [[bucket: 'demo-frontend123', excludedFile: '', flatten: true, gzipFiles: false, keepForever: false, managedArtifacts: false, noUploadOnFailure: false, selectedRegion: 'ap-southeast-1', showDirectlyInBrowser: false, sourceFile: 'dist/*', storageClass: 'STANDARD', uploadFromSlave: false, useServerSideEncryption: false]], pluginFailureResultConstraint: 'FAILURE', profileName: 'demo-frontend123', userMetadata: []
             }
 
         }
