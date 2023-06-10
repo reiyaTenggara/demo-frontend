@@ -7,11 +7,11 @@ pipeline {
 
     options {
         disableConcurrentBuilds()
-        timeout(time: 40, unit: 'MINUTES')
+        timeout(time: 20, unit: 'MINUTES')
     }
 
     stages {
-        stage('Send notification to Slack') {
+        stage('Send notification to Slack dev') {
             steps {
                 slackSend message: """\
                 Starting CI/CD on job: ${env.JOB_NAME}
@@ -21,42 +21,13 @@ pipeline {
             }
         }
 
-        stage('Npm install & build') {
+        stage('Npm instasadfasfadll & build') {
             steps {
                 sh 'npm install'
                 sh 'npm run build'
             }
         }
 
-        stage('Upload dist folder to S3 bucket') {
-            steps {
-                s3Upload (
-                    consoleLogLevel: 'WARNING',
-                    dontSetBuildResultOnFailure: true,
-                    dontWaitForConcurrentBuildCompletion: false,
-                    entries: [
-                        [
-                            bucket: 'demo-frontend123',
-                            excludedFile: '',
-                            flatten: false,
-                            gzipFiles: false,
-                            keepForever: false,
-                            managedArtifacts: false,
-                            noUploadOnFailure: true,
-                            selectedRegion: 'ap-southeast-1',
-                            showDirectlyInBrowser: false,
-                            sourceFile: 'dist/**',
-                            storageClass: 'STANDARD',
-                            uploadFromSlave: false,
-                            useServerSideEncryption: false
-                        ]
-                    ],
-                    pluginFailureResultConstraint: 'FAILURE',
-                    profileName: 'demo-frontend123',
-                    userMetadata: []
-                )
-            }
-        }
     }
 
     post {
