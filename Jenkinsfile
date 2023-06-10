@@ -7,11 +7,11 @@ pipeline {
 
     options {
         disableConcurrentBuilds()
-        timeout(time: 40, unit: 'MINUTES')
+        timeout(time: 20, unit: 'MINUTES')
     }
 
     stages {
-        stage('Send notification to Slack') {
+        stage('Send notification to Slack dev') {
             steps {
                 slackSend message: """\
                 Starting CI/CD on job: ${env.JOB_NAME}
@@ -21,7 +21,7 @@ pipeline {
             }
         }
 
-        stage('Npm install & build') {
+        stage('Npm instasadfasfadll & build') {
             steps {
                 sh 'npm install'
                 sh 'npm run build'
