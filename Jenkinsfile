@@ -61,7 +61,7 @@ pipeline {
 
     post {
         aborted {
-            slackSend(color: "warning", message: "PIPELINE DIBATALKAN SECARA MANUAL")
+            slackSend(color: "warning", message: "PIPELINE MANUALLY ABORTED")
         }
         failure {
             slackSend(color: "danger", message: "BUILD FAILED, PLEASE CHECK OUTPUT")
