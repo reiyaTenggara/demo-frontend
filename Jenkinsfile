@@ -9,7 +9,7 @@ pipeline {
     }
     stages {
 
-        stage('Send Slack Notification') {
+        stage('Send Slack Notificationaa') {
             steps {
                 slackSend (
                     channel: '#jenkins',
