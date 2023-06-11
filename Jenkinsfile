@@ -13,10 +13,10 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'slack_workspace_global', variable: 'slack_workspace_global')]) {
                     slackSend (
-                            channel: 'demo-olh3682',
-                            teamDomain: 'slack_workspace_global',
-                            tokenCredentialId: 'slack_token_local',
-                            message: """
+                        channel: '#jenkins',
+                        teamDomain: 'slack_workspace_global',
+                        tokenCredentialId: 'slack_token_local',
+                        message: """
                     Starting CI/CD on job: ${env.JOB_NAME}
                     Build Number: ${env.BUILD_NUMBER}
                     <${env.BUILD_URL}console|View Output> || <${env.JOB_URL}|View Job> || <${env.JOB_DISPLAY_URL}/${env.BRANCH_NAME}| Open Blue Ocean>
@@ -91,9 +91,9 @@ pipeline {
         success {
             slackSend (
                     channel: '#jenkins',
-                    teamDomain: 'slack_workspace_local',
-                    tokenCredentialId: 'slack_token_local',
-                    message: """
+                teamDomain: 'slack_workspace_local',
+                tokenCredentialId: 'slack_token_local',
+                message: """
                 Starting CI/CD on job: ${env.JOB_NAME}
                 Build Successed
                 """
