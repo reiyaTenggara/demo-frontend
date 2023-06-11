@@ -1,17 +1,14 @@
 pipeline {
     agent any
-
     tools {
         nodejs 'node18'
     }
-
     options {
         disableConcurrentBuilds()
-        timeout(time: 20, unit: 'MINUTES')
+        timeout(time: 40, unit: 'MINUTES')
     }
-
     stages {
-        stage('Send notification to Slack dev') {
+        stage('Send notification to Slack') {
             steps {
                 slackSend message: """\
                 Starting CI/CD on job: ${env.JOB_NAME}
@@ -20,16 +17,45 @@ pipeline {
                 """
             }
         }
-
-        stage('Npm instasadfasfadll & build') {
+        stage('Npm install & build') {
             steps {
                 sh 'npm install'
                 sh 'npm run build'
             }
         }
-
+        stage('Upload dist folder to S3 bucket') {
+            when {
+                expression { env.BRANCH_NAME == 'main' }
+            }
+            steps {
+                s3Upload (
+                        consoleLogLevel: 'WARNING',
+                        dontSetBuildResultOnFailure: true,
+                        dontWaitForConcurrentBuildCompletion: false,
+                        entries: [
+                                [
+                                        bucket: 'demo-frontend123',
+                                        excludedFile: '',
+                                        flatten: false,
+                                        gzipFiles: false,
+                                        keepForever: false,
+                                        managedArtifacts: false,
+                                        noUploadOnFailure: true,
+                                        selectedRegion: 'ap-southeast-1',
+                                        showDirectlyInBrowser: false,
+                                        sourceFile: 'dist/**',
+                                        storageClass: 'STANDARD',
+                                        uploadFromSlave: false,
+                                        useServerSideEncryption: false
+                                ]
+                        ],
+                        pluginFailureResultConstraint: 'FAILURE',
+                        profileName: 'demo-frontend123',
+                        userMetadata: []
+                )
+            }
+        }
     }
-
     post {
         aborted {
             slackSend(color: "warning", message: "PIPELINE MANUALLY ABORTED")
