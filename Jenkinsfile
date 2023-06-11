@@ -14,7 +14,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'slack_workspace_global', variable: 'slack_workspace_global')]) {
                     slackSend (
                         channel: '#jenkins',
-                        teamDomain: 'slack_workspace_global',
+                        teamDomain: 'demo-olh3682',
                         tokenCredentialId: 'slack_token_local',
                         message: """
                     Starting CI/CD on job: ${env.JOB_NAME}
