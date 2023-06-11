@@ -10,9 +10,12 @@ pipeline {
     stages {
         stage('Send notification to Slack') {
             steps {
+                teamDomain: 'demo-olh3682', tokenCredentialId: 'slack_token'
+
                 slackSend (
-                channel: "#cid",
-                token: "yubiyyVxbBnPH5DpJb2k7XG8",
+                channel: '#cicd-notification',
+                teamDomain: 'demo-olh3682',
+                tokenCredentialId: 'slack_token',
                 message: """\
                 Starting CI/CD on job: ${env.JOB_NAME}
                 Build Number: ${env.BUILD_NUMBER}
@@ -69,8 +72,9 @@ pipeline {
         }
         success {
             slackSend (
-                channel: "#cid-notification",
-                token: "fVlZJ3D218LEOuq1IuI38LSV",
+                channel: '#cicd-notification',
+                teamDomain: 'demo-olh3682',
+                tokenCredentialId: 'slack_token_lajoe',
                 message: """\
                 build success
                """
