@@ -13,9 +13,9 @@ pipeline {
                 teamDomain: 'demo-olh3682', tokenCredentialId: 'slack_token'
 
                 slackSend (
-                channel: '#cicd-notification',
-                teamDomain: 'demo-olh3682',
-                tokenCredentialId: 'slack_token',
+                channel: "#cicd-notification",
+                teamDomain: "demo-olh3682",
+                tokenCredentialId: "slack_token",
                 message: """\
                 Starting CI/CD on job: ${env.JOB_NAME}
                 Build Number: ${env.BUILD_NUMBER}
@@ -72,9 +72,9 @@ pipeline {
         }
         success {
             slackSend (
-                channel: '#cicd-notification',
-                teamDomain: 'demo-olh3682',
-                tokenCredentialId: 'slack_token_lajoe',
+                channel: "#cicd-notification",
+                teamDomain: "demo-olh3682",
+                tokenCredentialId: "slack_token_lajoe",
                 message: """\
                 build success
                """
