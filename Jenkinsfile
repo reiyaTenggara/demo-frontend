@@ -1,4 +1,9 @@
 pipeline {
+
+    environment {
+        slack_workspace_local = credentials('slack_workspace_local')
+    }
+
     agent any
     tools {
         nodejs 'node18'
@@ -11,13 +16,9 @@ pipeline {
 
         stage('Send Slack Notificationaa') {
             steps {
-                withCredentials([
-                string(credentialsId: 'slack_workspace_local', variable: 'slack_workspace_local'),
-                string(credentialsId: 'slack_token_local', variable: 'slack_token_local')
-                ]) {
                     slackSend (
                     channel: '#jenkins',
-                    teamDomain: "slack_workspace_local",
+                    teamDomain: "$slack_workspace_local",
                     tokenCredentialId: "slack_token_local",
                     message: """
                     Starting CI/CD on job: ${env.JOB_NAME}
@@ -25,7 +26,7 @@ pipeline {
                     <${env.BUILD_URL}console|View Output> || <${env.JOB_URL}|View Job> || <${env.JOB_DISPLAY_URL}/${env.BRANCH_NAME}| Open Blue Ocean>
                     """
                     )
-                }
+
 
             }
         }
