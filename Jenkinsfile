@@ -11,11 +11,14 @@ pipeline {
 
         stage('Send Slack Notificationaa') {
             steps {
-                withCredentials([string(credentialsId: 'slack_workspace_global', variable: 'slack_workspace_global')]) {
+                withCredentials([
+                string(credentialsId: 'slack_workspace_local', variable: 'slack_workspace_local'),
+                string(credentialsId: 'slack_token_local', variable: 'slack_token_local')
+                ]) {
                     slackSend (
                     channel: '#jenkins',
                     teamDomain: "$slack_workspace_global",
-                    tokenCredentialId: 'slack_token_local',
+                    tokenCredentialId: "$slack_token_global",
                     message: """
                     Starting CI/CD on job: ${env.JOB_NAME}
                     Build Number: ${env.BUILD_NUMBER}
