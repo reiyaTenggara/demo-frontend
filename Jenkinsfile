@@ -89,8 +89,7 @@ pipeline {
                 channel: '#jenkins',
                 teamDomain: 'demo-olh3682',
                 tokenCredentialId: 'slack_token',
-                message: """
-                Starting CI/CD on job: ${env.JOB_NAME}
+                message: """Starting CI/CD on job: ${env.JOB_NAME}
                 Build Successed
                 """
             )
