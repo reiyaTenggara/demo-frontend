@@ -70,8 +70,8 @@ pipeline {
         }
         success {
             slackSend (
-                channel: "#cicd-notification",
-                teamDomain: "demo-olh3682",
+                channel: "#cid",
+                teamDomain: "dlajoe",
                 tokenCredentialId: "slack_token_lajoe",
                 message: """\
                 build success
