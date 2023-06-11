@@ -8,7 +8,7 @@ pipeline {
         timeout(time: 40, unit: 'MINUTES')
     }
     stages {
-        stage('Send notification to Slack') {
+        stage('Send Slack Notification') {
             steps {
                 slackSend (
                 channel: '#jenkins',
