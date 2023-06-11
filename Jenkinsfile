@@ -1,3 +1,12 @@
+def sendSlackNotification(message) {
+    slackSend (
+        channel: '#jenkins',
+        teamDomain: "$slack_workspace_local",
+        tokenCredentialId: "slack_token_local",
+        message: message
+    )
+}
+
 pipeline {
 
     environment {
@@ -16,20 +25,10 @@ pipeline {
 
         stage('Send Slack Notificationaa') {
             steps {
-                    slackSend (
-                    channel: '#jenkins',
-                    teamDomain: "$slack_workspace_local",
-                    tokenCredentialId: "slack_token_local",
-                    message: """
-                    Starting CI/CD on job: ${env.JOB_NAME}
-                    Build Number: ${env.BUILD_NUMBER}
-                    <${env.BUILD_URL}console|View Output> || <${env.JOB_URL}|View Job> || <${env.JOB_DISPLAY_URL}/${env.BRANCH_NAME}| Open Blue Ocean>
-                    """
-                    )
-
-
+                sendSlackNotification("Starting CI/CD on job: ${env.JOB_NAME}\n Build Number: ${env.BUILD_NUMBER}\n <${env.BUILD_URL}console|View Output> || <${env.JOB_URL}|View Job> || <${env.JOB_DISPLAY_URL}/${env.BRANCH_NAME}| Open Blue Ocean>")
             }
         }
+
         stage('Npm install & build') {
             steps {
                 sh 'npm install'
@@ -72,34 +71,31 @@ pipeline {
     post {
         aborted {
             slackSend (
-                    channel: '#jenkins',
-                    teamDomain: 'demo-olh3682',
-                    tokenCredentialId: 'slack_token',
-                    message: '''
-                    Starting CI/CD on job: ${env.JOB_NAME}
-                    Build Failure
-                '''
+                channel: '#jenkins',
+                teamDomain: "$slack_workspace_local",
+                tokenCredentialId: "slack_token_local",
+                message: """
+                Build Aborted
+                """
             )
         }
         failure {
             slackSend (
-                    channel: '#jenkins',
-                    teamDomain: 'demo-olh3682',
-                    tokenCredentialId: 'slack_token_local',
-                    message: '''
-                    Starting CI/CD on job: ${env.JOB_NAME}
-                    Build Failure
-                '''
+                channel: '#jenkins',
+                teamDomain: "$slack_workspace_local",
+                tokenCredentialId: "slack_token_local",
+                message: """
+                Build Failed
+                """
             )
         }
         success {
             slackSend (
                 channel: '#jenkins',
-                teamDomain: 'slack_workspace_local',
-                tokenCredentialId: 'slack_token_local',
+                teamDomain: "$slack_workspace_local",
+                tokenCredentialId: "slack_token_local",
                 message: """
-                Starting CI/CD on job: ${env.JOB_NAME}
-                Build Successed
+                Build Success
                 """
             )
         }
