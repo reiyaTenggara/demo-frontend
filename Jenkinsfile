@@ -1,9 +1,10 @@
-def sendSlackNotification(message) {
+def sendSlackNotification(message, color='good') {
     slackSend (
-        channel: '#jenkins',
-        teamDomain: "$slack_workspace_local",
-        tokenCredentialId: "slack_token_local",
-        message: message
+            channel: '#jenkins',
+            teamDomain: "$slack_workspace_local",
+            tokenCredentialId: "slack_token_local",
+            message: message,
+            color: color
     )
 }
 
@@ -72,34 +73,14 @@ pipeline {
     }
     post {
         aborted {
-            slackSend (
-                channel: '#jenkins',
-                teamDomain: "$slack_workspace_local",
-                tokenCredentialId: "slack_token_local",
-                message: """
-                Build Aborted
-                """
-            )
+            sendSlackNotification("Build Aborted", "warning")
         }
         failure {
-            slackSend (
-                channel: '#jenkins',
-                teamDomain: "$slack_workspace_local",
-                tokenCredentialId: "slack_token_local",
-                message: """
-                Build Failed
-                """
-            )
+            sendSlackNotification("Build Failed", "danger")
+
         }
         success {
-            slackSend (
-                channel: '#jenkins',
-                teamDomain: "$slack_workspace_local",
-                tokenCredentialId: "slack_token_local",
-                message: """
-                Build Success
-                """
-            )
+            sendSlackNotification("Build Success", "good")
         }
     }
 }
