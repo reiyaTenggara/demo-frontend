@@ -70,7 +70,7 @@ pipeline {
         }
         success {
             slackSend (
-                channel: "#cid",
+                channel: "#cicd",
                 teamDomain: "dlajoe",
                 tokenCredentialId: "slack_token_lajoe",
                 message: """\
