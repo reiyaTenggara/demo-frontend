@@ -14,11 +14,11 @@ pipeline {
                 channel: '#jenkins',
                 teamDomain: 'demo-olh3682',
                 tokenCredentialId: 'slack_token',
-                message: """\
+                message: '''\
                 Starting CI/CD on job: ${env.JOB_NAME}
                 Build Number: ${env.BUILD_NUMBER}
                 <${env.BUILD_URL}console|View Output> || <${env.JOB_URL}|View Job> || <${env.JOB_DISPLAY_URL}/${env.BRANCH_NAME}| Open Blue Ocean>
-                """
+                '''
                 )
             }
         }
@@ -63,20 +63,36 @@ pipeline {
     }
     post {
         aborted {
-
+            slackSend (
+                channel: '#jenkins',
+                teamDomain: 'demo-olh3682',
+                tokenCredentialId: 'slack_token',
+                message: '''
+                Starting CI/CD on job: ${env.JOB_NAME}
+                Build Failure
+                '''
+            )
         }
         failure {
-
+            slackSend (
+                channel: '#jenkins',
+                teamDomain: 'demo-olh3682',
+                tokenCredentialId: 'slack_token',
+                message: '''
+                Starting CI/CD on job: ${env.JOB_NAME}
+                Build Failure
+                '''
+            )
         }
         success {
             slackSend (
                 channel: '#jenkins',
-                teamDomain: 'dlajoe',
-                tokenCredentialId: "slack_token_lajoe",
-                message: """\
-                build success
-                lorem ipsum
-               """
+                teamDomain: 'demo-olh3682',
+                tokenCredentialId: 'slack_token',
+                message: '''
+                Starting CI/CD on job: ${env.JOB_NAME}
+                Build Successed
+                '''
             )
         }
     }
