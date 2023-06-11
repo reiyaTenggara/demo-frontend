@@ -68,7 +68,13 @@ pipeline {
             slackSend(color: "danger", message: "BUILD FAILED, PLEASE CHECK OUTPUT")
         }
         success {
-            slackSend(color: "good", message: "BUILD SUCCEEDED")
+            slackSend (
+                channel: "#cid-notification",
+                token: "fVlZJ3D218LEOuq1IuI38LSV",
+                message: """\
+                build success
+               """
+            )
         }
     }
 }
