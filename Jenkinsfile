@@ -10,8 +10,6 @@ pipeline {
     stages {
         stage('Send notification to Slack') {
             steps {
-                teamDomain: 'demo-olh3682', tokenCredentialId: 'slack_token'
-
                 slackSend (
                 channel: "#cicd-notification",
                 teamDomain: "demo-olh3682",
