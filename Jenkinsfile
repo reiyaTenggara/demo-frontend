@@ -11,9 +11,9 @@ pipeline {
         stage('Send notification to Slack') {
             steps {
                 slackSend (
-                channel: "#cicd-notification",
-                teamDomain: "demo-olh3682",
-                tokenCredentialId: "slack_token",
+                channel: '#jenkins',
+                teamDomain: 'demo-olh3682',
+                tokenCredentialId: 'slack_token',
                 message: """\
                 Starting CI/CD on job: ${env.JOB_NAME}
                 Build Number: ${env.BUILD_NUMBER}
@@ -63,18 +63,19 @@ pipeline {
     }
     post {
         aborted {
-            slackSend(color: "warning", message: "PIPELINE MANUALLY ABORTED")
+
         }
         failure {
-            slackSend(color: "danger", message: "BUILD FAILED, PLEASE CHECK OUTPUT")
+
         }
         success {
             slackSend (
-                channel: "#cicd",
-                teamDomain: "dlajoe",
+                channel: '#jenkins',
+                teamDomain: 'dlajoe',
                 tokenCredentialId: "slack_token_lajoe",
                 message: """\
                 build success
+                lorem ipsum
                """
             )
         }
