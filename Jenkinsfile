@@ -16,6 +16,7 @@ pipeline {
             }
             steps {
                 slackSend (
+
                     channel: '#jenkins',
                     teamDomain: '$slack_workspace_local',
                     tokenCredentialId: 'slack_token_local',
