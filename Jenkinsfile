@@ -71,6 +71,7 @@ pipeline {
             }
         }
     }
+
     post {
         aborted {
             sendSlackNotification("Build Aborted", "warning")
