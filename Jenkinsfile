@@ -74,7 +74,7 @@ pipeline {
 
     post {
         aborted {
-            sendSlackNotification("Build Aborted", "warning")
+            sendSlackNotification("Buasdfild Aborted", "warning")
         }
         failure {
             sendSlackNotification("Build Failed", "danger")
