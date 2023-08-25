@@ -32,12 +32,8 @@ pipeline {
 
     stage('Notify Slack Channel') {
       steps {
-        // get custom git log
-        // script {
-        //   env.GITLOG = sh(returnStdout: true, script: 'git log --format="Author: %an | Commit ID: %h\n Commit Message: %s" -1')
-        // }
         sendSlackNotification(
-        "🟡 Starting CI/CD for ${env.JOB_NAME}\n" +
+        "🟡 Starting CI/CD for ${env.JOB_NAME}\n ${env.BUILD_NUMBER}" +
         "${env.GITLOG}" +
         "<${env.BUILD_URL}console|Console Output> || <${env.JOB_URL}|Jobs Dashboard> || <${env.JOB_DISPLAY_URL}/${env.BRANCH_NAME}|Blue Ocean Dashboard> || <${SONARQUBE_LINK_GLOBAL}${REPOSITORY_NAME}%3A${env.BRANCH_NAME}|Sonarqube>")
       }
@@ -74,28 +70,19 @@ pipeline {
       }
     }
 
-    stage('Upload Static Files to AWS S3 Bucket') {
-      steps {
-        withCredentials([string(credentialsId: "${env.BRANCH_NAME}_BUCKET_NAME", variable: 'BUCKET_NAME'),]) {
-          withAWS(region:'ap-southeast-1', credentials:'AWS_CREDENTIAL') {
-            s3Upload(file:'./dist', bucket: "${BUCKET_NAME}", path:'')
-          } 
-        }
-      }
-    }
 
   }
 
-  // post {
-  //   failure {
-  //     sendSlackNotification('The build process has failed. Please review the build log and contact the administrator for assistance.', 'danger')
-  //   }
-  //   aborted {
-  //     sendSlackNotification('The build process has been manually aborted.', 'warning')
-  //   }
-  //   success {
-  //     archiveArtifacts artifacts: 'dist/**', onlyIfSuccessful: true
-  //     sendSlackNotification('The build process has completed successfully.', 'good')
-  //   }
-  // }
+  post {
+    failure {
+      sendSlackNotification('The build process has failed. Please review the build log and contact the administrator for assistance.', 'danger')
+    }
+    aborted {
+      sendSlackNotification('The build process has been manually aborted.', 'warning')
+    }
+    success {
+      archiveArtifacts artifacts: 'dist/**', onlyIfSuccessful: true
+      sendSlackNotification('The build process has completed successfully.', 'good')
+    }
+  }
 }
