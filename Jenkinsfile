@@ -33,7 +33,7 @@ pipeline {
     stage('Notify Slack Channel') {
       steps {
         sendSlackNotification(
-        "🟡 Starting CI/CD for ${env.JOB_NAME}\n " +
+        "🟡 Starting CI/CD for ${env.JOB_NAME}\n ${SCANNERHOME} " +
         "Build Number: ${env.BUILD_NUMBER} ${env.GITLOG}" +
         "<${env.BUILD_URL}console|Console Output> || <${env.JOB_URL}|Jobs Dashboard> || <${env.JOB_DISPLAY_URL}/${env.BRANCH_NAME}|Blue Ocean Dashboard> || <${SONARQUBE_LINK_GLOBAL}${env.JOB_NAME}|Sonarqube>")
       }
