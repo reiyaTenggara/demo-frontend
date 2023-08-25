@@ -44,7 +44,7 @@ pipeline {
       withSonarQubeEnv('SONARQUBE_SERVER') {
           sh """
           ${SCANNERHOME}/bin/sonar-scanner \
-          -D sonar.projectKey=${env.JOB_NAME} | tr '/' ':'
+          -D sonar.projectKey=${env.GIT_BRANCH}
           """
         }
       }
