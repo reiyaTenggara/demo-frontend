@@ -16,7 +16,6 @@ pipeline {
 
   environment {
     SLACK_WORKSPACE = credentials('SLACK_WORKSPACE')
-    AWS_CREDENTIAL = credentials('AWS_CREDENTIAL')
     SONARQUBE_LINK_GLOBAL = credentials('SONARQUBE_LINK_GLOBAL')
     REPOSITORY_NAME = sh(returnStdout: true, script: 'echo ${JOB_NAME} | cut -d "/" -f1').trim()
     HOME = '.'
