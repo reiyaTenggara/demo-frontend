@@ -33,9 +33,9 @@ pipeline {
     stage('Notify Slack Channel') {
       steps {
         // get custom git log
-        script {
-          env.GITLOG = sh(returnStdout: true, script: 'git log --format="Author: %an | Commit ID: %h\n Commit Message: %s" -1')
-        }
+        // script {
+        //   env.GITLOG = sh(returnStdout: true, script: 'git log --format="Author: %an | Commit ID: %h\n Commit Message: %s" -1')
+        // }
         sendSlackNotification(
         "🟡 Starting CI/CD for ${env.JOB_NAME}\n" +
         "${env.GITLOG}" +
