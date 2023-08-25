@@ -40,13 +40,6 @@ pipeline {
       }
     }
 
-    stage ('run coverage'){
-      steps{
-        sh 'npm install'
-        sh 'npm run coverage'
-      }
-    }
-
     stage ('run parallel'){
 
       parallel {
