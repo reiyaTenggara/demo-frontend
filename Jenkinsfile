@@ -20,6 +20,7 @@ pipeline {
     REPOSITORY_NAME = sh(returnStdout: true, script: 'echo ${JOB_NAME} | cut -d "/" -f1').trim()
     HOME = '.'
     GITLOG = sh(returnStdout: true, script: 'git log --format="Author: %an | Commit ID: %h\n Commit Message: %s" -1')
+    // SCANNERHOME = tool 'SONARSCANNER'
   }
 
   options {
@@ -41,12 +42,12 @@ pipeline {
 
     stage('Performing SonarQube Analysis') {
       environment {
-        SCANNERHOME = tool 'SONARSCANNER'
+        SCANNERHOME = tool 'SONAR_NEW'
       }
       steps {
         withSonarQubeEnv('SONARQUBE_SERVER') {
           sh """
-          ${SCANNERHOME}/sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner \
+          ${SCANNERHOME}/bin/sonar-scanner \
           -D sonar.projectKey=${env.JOB_NAME} | tr '/' ':'
           """
         }
