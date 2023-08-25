@@ -94,16 +94,16 @@ pipeline {
 
   }
 
-  post {
-    failure {
-      sendSlackNotification('The build process has failed. Please review the build log and contact the administrator for assistance.', 'danger')
-    }
-    aborted {
-      sendSlackNotification('The build process has been manually aborted.', 'warning')
-    }
-    success {
-      archiveArtifacts artifacts: 'dist/**', onlyIfSuccessful: true
-      sendSlackNotification('The build process has completed successfully.', 'good')
-    }
-  }
+  // post {
+  //   failure {
+  //     sendSlackNotification('The build process has failed. Please review the build log and contact the administrator for assistance.', 'danger')
+  //   }
+  //   aborted {
+  //     sendSlackNotification('The build process has been manually aborted.', 'warning')
+  //   }
+  //   success {
+  //     archiveArtifacts artifacts: 'dist/**', onlyIfSuccessful: true
+  //     sendSlackNotification('The build process has completed successfully.', 'good')
+  //   }
+  // }
 }
