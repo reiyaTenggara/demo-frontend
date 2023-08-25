@@ -35,7 +35,7 @@ pipeline {
         sendSlackNotification(
         "🟡 Starting CI/CD for ${env.JOB_NAME}\n " +
         "Build Number: ${env.BUILD_NUMBER} ${env.GITLOG}" +
-        "<${env.BUILD_URL}console|Console Output> || <${env.JOB_URL}|Jobs Dashboard> || <${env.JOB_DISPLAY_URL}/${env.BRANCH_NAME}|Blue Ocean Dashboard> || <${SONARQUBE_LINK_GLOBAL}${REPOSITORY_NAME}%3A${env.BRANCH_NAME}|Sonarqube>")
+        "<${env.BUILD_URL}console|Console Output> || <${env.JOB_URL}|Jobs Dashboard> || <${env.JOB_DISPLAY_URL}/${env.BRANCH_NAME}|Blue Ocean Dashboard> || <${SONARQUBE_LINK_GLOBAL}${env.JOB_NAME}|Sonarqube>")
       }
     }
 
@@ -49,9 +49,7 @@ pipeline {
           ${SCANNERHOME}/bin/sonar-scanner \
           -D sonar.projectKey=${env.JOB_NAME} | tr '/' ':'
           """
-        }
-        sendSlackNotification("The SonarQube scan has completed successfully. <${SONARQUBE_LINK_GLOBAL}${REPOSITORY_NAME}%3A${env.BRANCH_NAME}|Please check the code quality by clicking on this link>")
-        
+        }        
       }
     }
 
