@@ -39,22 +39,21 @@ pipeline {
       }
     }
 
-    // stage('Performing SonarQube Analysis') {
-    //   environment {
-    //     SCANNERHOME = tool 'SONARSCANNER'
-    //   }
-    //   steps {
-    //     withSonarQubeEnv('SONARQUBE_SERVER') {
-    //       sh """
-    //       ${SCANNERHOME}/sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner \
-    //       -D sonar.projectKey=${REPOSITORY_NAME}:${env.BRANCH_NAME} \
-    //       -D sonar.projectName=${REPOSITORY_NAME}:${env.BRANCH_NAME} \
-    //       """
-    //     }
-    //     sendSlackNotification("The SonarQube scan has completed successfully. <${SONARQUBE_LINK_GLOBAL}${REPOSITORY_NAME}%3A${env.BRANCH_NAME}|Please check the code quality by clicking on this link>")
+    stage('Performing SonarQube Analysis') {
+      environment {
+        SCANNERHOME = tool 'SONARSCANNER'
+      }
+      steps {
+        withSonarQubeEnv('SONARQUBE_SERVER') {
+          sh """
+          ${SCANNERHOME}/sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner \
+          -D sonar.projectKey=${env.JOB_NAME}
+          """
+        }
+        sendSlackNotification("The SonarQube scan has completed successfully. <${SONARQUBE_LINK_GLOBAL}${REPOSITORY_NAME}%3A${env.BRANCH_NAME}|Please check the code quality by clicking on this link>")
         
-    //   }
-    // }
+      }
+    }
 
 
     stage('Install Node.js Packages (npm install)') {
