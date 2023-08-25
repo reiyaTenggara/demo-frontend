@@ -41,14 +41,14 @@ pipeline {
 
     stage('Performing SonarQube Analysis') {
       steps {
-        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+        // catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           withSonarQubeEnv('SONARQUBE_SERVER') {
             sh """
             ${SCANNERHOME}/bin/sonar-scansfdner \
             -D sonar.projectKey=${env.JOB_NAME} | tr '/' ':'
             """
           }    
-        }
+        // }
       }
     }
 
