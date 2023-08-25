@@ -19,7 +19,7 @@ pipeline {
     SONARQUBE_LINK_GLOBAL = credentials('SONARQUBE_LINK_GLOBAL')
     HOME = '.'
     GITLOG = sh(returnStdout: true, script: 'git log --format="Author: %an | Commit ID: %h\n Commit Message: %s" -1')
-    // SCANNERHOME = tool 'SONARSCANNER'
+    SCANNERHOME = tool 'SONAR_NEW'
   }
 
   options {
@@ -40,9 +40,6 @@ pipeline {
     }
 
     stage('Performing SonarQube Analysis') {
-      environment {
-        SCANNERHOME = tool 'SONAR_NEW'
-      }
       steps {
         withSonarQubeEnv('SONARQUBE_SERVER') {
           sh """
