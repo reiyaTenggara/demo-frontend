@@ -20,6 +20,7 @@ pipeline {
     HOME = '.'
     GITLOG = sh(returnStdout: true, script: 'git log --format="Author: %an | Commit ID: %h\n Commit Message: %s" -1')
     SCANNERHOME = tool 'SONAR_NEW'
+    REPOSITORY_NAME = sh(returnStdout: true, script: 'echo ${JOB_NAME} | cut -d "/" -f1')
   }
 
   options {
@@ -35,7 +36,7 @@ pipeline {
         sendSlackNotification(
         "🟡 Starting CI/CD for ${env.JOB_NAME}\n ${SCANNERHOME} " +
         "Build Number: ${env.BUILD_NUMBER} ${env.GITLOG}" +
-        "<${env.BUILD_URL}console|Console Output> || <${env.JOB_URL}|Jobs Dashboard> || <${env.JOB_DISPLAY_URL}/${env.BRANCH_NAME}|Blue Ocean Dashboard> || <${SONARQUBE_LINK_GLOBAL}${env.JOB_NAME}|Sonarqube>")
+        "<${env.BUILD_URL}console|Console Output> || <${env.JOB_URL}|Jobs Dashboard> || <${SONARQUBE_LINK_GLOBAL}${REPOSITORY_NAME}%3A${env.BRANCH_NAME}|Sonarqube>")
       }
     }
 
@@ -44,7 +45,7 @@ pipeline {
       withSonarQubeEnv('SONARQUBE_SERVER') {
           sh """
           ${SCANNERHOME}/bin/sonar-scanner \
-          -D sonar.projectKey=${env.GIT_BRANCH}
+          -D sonar.projectKey=${REPOSITORY_NAME}:{env.BRANCH_NAME}
           """
         }
       }
