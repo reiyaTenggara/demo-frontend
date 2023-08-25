@@ -45,7 +45,7 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           withSonarQubeEnv('SONARQUBE_SERVER') {
             sh """
-              ${SCANNERHOME}/sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner \
+              ${SCANNERHOME}/bin/sonar-scanner \
               -D sonar.projectKey=${REPOSITORY_NAME}:${env.BRANCH_NAME} \
               -D sonar.projectName=${REPOSITORY_NAME}:${env.BRANCH_NAME} \
             """
