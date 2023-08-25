@@ -45,7 +45,7 @@ pipeline {
         withSonarQubeEnv('SONARQUBE_SERVER') {
           catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
             sh """
-            ${SCANNERHOME}/bin/sonar-scansfdner \
+            ${SCANNERHOME}/bin/sonar-scanner \
             -D sonar.projectKey=${env.JOB_NAME} | tr '/' ':'
             """
           }
